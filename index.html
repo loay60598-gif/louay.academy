@@ -1,0 +1,404 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LOUAI ACADEMY</title>
+<style>
+:root{--bg:#0b1220;--panel:#121d30;--line:#293951;--text:#edf3ff;--muted:#9eacc2;--blue:#4f8cff;--cyan:#34d5c3}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(135deg,#0b1220,#14233a);color:var(--text);font-family:Tahoma,Arial,sans-serif}
+header{position:sticky;top:0;background:#0b1220ee;border-bottom:1px solid var(--line);z-index:5}
+.top{max-width:1100px;margin:auto;padding:15px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{background:linear-gradient(135deg,var(--blue),var(--cyan));color:#071322;padding:13px;border-radius:13px;font-weight:bold}
+.brand h1{font-size:18px;margin:0}
+.brand small,.muted{color:var(--muted)}
+nav{display:flex;gap:7px;flex-wrap:wrap}
+button{cursor:pointer;font:inherit}
+nav button,.btn{background:var(--panel);color:var(--text);border:1px solid var(--line);padding:10px 14px;border-radius:10px}
+nav button.active,.primary{background:var(--blue);color:white;border-color:var(--blue)}
+main{max-width:1100px;margin:28px auto;padding:0 18px}
+.hero{padding:35px;border:1px solid #2c4566;border-radius:20px;background:linear-gradient(120deg,#172943,#142033);display:grid;grid-template-columns:1.5fr 1fr;align-items:center;gap:20px}
+.hero h2{font-size:38px;margin:12px 0}
+.hero p{line-height:2;color:#c1cee1}
+.hero-art{text-align:center;font-size:85px}
+.eyebrow{color:var(--cyan);font-weight:bold}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.card,.section-box,.lesson{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin:30px 0 15px}
+.section-head h2{margin:0}
+.card p,.lesson p{color:var(--muted);line-height:1.8;font-size:13px}
+.panel{display:none}
+.panel.active{display:block}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+.stat{background:var(--panel);border:1px solid var(--line);padding:17px;border-radius:14px}
+.stat strong{font-size:22px;display:block}
+.field{background:#0c1728;border:1px solid var(--line);color:white;padding:11px;border-radius:10px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:15px 0}
+.lesson-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.tag{color:var(--cyan);font-size:12px}
+.modal{display:none;position:fixed;inset:0;background:#000b;z-index:10;place-items:center;padding:15px}
+.modal.show{display:grid}
+.modal-box{background:var(--panel);border:1px solid var(--line);padding:22px;border-radius:17px;width:100%;max-width:650px;max-height:85vh;overflow:auto}
+.modal-box p{line-height:2}
+.modal-top{display:flex;justify-content:space-between;align-items:center}
+.answers label{display:block;padding:12px;background:#18263d;border-radius:10px;margin:8px 0;cursor:pointer}
+.chat-wrap{display:grid;grid-template-columns:1fr 250px;gap:14px}
+.messages{height:350px;overflow:auto}
+.msg{background:#18263d;padding:10px;border-radius:12px;margin:8px 0;width:fit-content;max-width:90%}
+.msg b{display:block;color:var(--cyan);font-size:12px;margin-bottom:5px}
+.msg p{margin:0;overflow-wrap:anywhere}
+.chat-form{display:flex;gap:8px;margin-top:12px}
+.chat-form input{flex:1;min-width:0}
+.note{color:#ffc857;font-size:12px;line-height:1.8}
+footer{text-align:center;color:var(--muted);padding:25px;margin-top:40px;border-top:1px solid var(--line)}
+@media(max-width:750px){
+.hero{grid-template-columns:1fr}.hero-art{display:none}
+.grid{grid-template-columns:1fr 1fr}
+.chat-wrap{grid-template-columns:1fr}
+}
+@media(max-width:500px){
+.grid,.lesson-list{grid-template-columns:1fr}
+.hero h2{font-size:27px}
+.chat-form{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<header>
+<div class="top">
+ <div class="brand">
+  <div class="logo">LA</div>
+  <div><h1>LOUAI ACADEMY</h1><small>طريقك نحو التفوق يبدأ هنا</small></div>
+ </div>
+ <nav>
+  <button class="active" data-page="home">الرئيسية</button>
+  <button data-page="courses">الدروس</button>
+  <button data-page="tests">الاختبارات</button>
+  <button data-page="chat">الشات الجماعي</button>
+  <button data-page="about">حول الأكاديمية</button>
+ </nav>
+</div>
+</header>
+
+<main>
+
+<section id="home" class="panel active">
+ <div class="hero">
+  <div>
+   <span class="eyebrow">منصة تعليمية جزائرية</span>
+   <h2>تعلّم بذكاء، وتفوّق بثقة.</h2>
+   <p>فضاؤك الدراسي لتنظيم الدروس والاختبارات والتواصل الكتابي مع التلاميذ. اختر مستواك الدراسي وابدأ رحلتك نحو نتائج أفضل.</p>
+   <button class="btn primary" onclick="showPage('courses')">اكتشف الدروس ←</button>
+  </div>
+  <div class="hero-art">🎓📚</div>
+ </div>
+
+ <div class="stats">
+  <div class="stat"><strong>3</strong><span class="muted">أطوار تعليمية</span></div>
+  <div class="stat"><strong>متجدّد</strong><span class="muted">محتوى قابل للإضافة</span></div>
+  <div class="stat"><strong>مجاني</strong><span class="muted">نسخة تجريبية</span></div>
+ </div>
+
+ <div class="section-head"><h2>اختر الطور الدراسي</h2></div>
+ <div class="grid">
+  <div class="card"><h2>🧒 الابتدائي</h2><p>دروس مبسطة لبناء الأساسيات.</p><button class="btn" onclick="chooseLevel('5 ابتدائي')">عرض السنوات</button></div>
+  <div class="card"><h2>📘 المتوسط</h2><p>دروس وتمارين للتحضير الجيد.</p><button class="btn" onclick="chooseLevel('4 متوسط')">عرض السنوات</button></div>
+  <div class="card"><h2>🧪 الثانوي</h2><p>مواد وشعب متنوعة للمراجعة.</p><button class="btn" onclick="chooseLevel('1 ثانوي')">عرض السنوات</button></div>
+ </div>
+
+ <div class="section-head"><h2>خدمات الأكاديمية</h2></div>
+ <div class="grid">
+  <div class="card"><h3>📖 الدروس</h3><p>دروس منظمة حسب المستوى والمادة.</p></div>
+  <div class="card"><h3>📝 الاختبارات</h3><p>أسئلة تدريبية مع تصحيح فوري.</p></div>
+  <div class="card"><h3>💬 التواصل</h3><p>شات جماعي كتابي تجريبي.</p></div>
+ </div>
+</section>
+
+<section id="courses" class="panel">
+ <div class="section-head"><h2>مكتبة الدروس</h2></div>
+ <div class="toolbar">
+  <select id="levelSelect" class="field">
+   <option>1 ثانوي</option><option>2 ثانوي</option><option>3 ثانوي</option>
+   <option>4 متوسط</option><option>5 ابتدائي</option>
+  </select>
+  <select id="subjectSelect" class="field">
+   <option value="الرياضيات">الرياضيات</option>
+   <option value="الفيزياء">الفيزياء</option>
+   <option value="العلوم">علوم الطبيعة والحياة</option>
+   <option value="الإعلام الآلي">الإعلام الآلي</option>
+   <option value="التكنولوجيا">التكنولوجيا</option>
+  </select>
+  <input id="lessonSearch" class="field" placeholder="ابحث عن درس...">
+ </div>
+ <div id="lessonList" class="lesson-list"></div>
+</section>
+
+<section id="tests" class="panel">
+ <div class="section-head"><h2>فضاء الاختبارات</h2></div>
+ <div class="card">
+  <span class="tag">اختبار تجريبي</span>
+  <h3>الرياضيات – مجموعات الأعداد</h3>
+  <p>3 أسئلة قصيرة مع نتيجة فورية.</p>
+  <button class="btn primary" onclick="startQuiz()">ابدأ الاختبار</button>
+ </div>
+ <div id="quizResult" class="section-box" style="display:none;margin-top:15px"></div>
+</section>
+
+<section id="chat" class="panel">
+ <div class="section-head"><h2>الشات الجماعي</h2><span class="muted">محادثة كتابية فقط</span></div>
+ <div class="chat-wrap">
+  <div class="section-box">
+   <div id="messages" class="messages"></div>
+   <form id="chatForm" class="chat-form">
+    <input id="chatName" class="field" maxlength="24" placeholder="اسمك" required>
+    <input id="chatText" class="field" maxlength="500" placeholder="اكتب رسالة..." required>
+    <button class="btn primary">إرسال</button>
+   </form>
+  </div>
+  <aside class="section-box">
+   <h3>قواعد المحادثة</h3>
+   <p class="muted">• احترم جميع المشاركين.</p>
+   <p class="muted">• لا تنشر معلوماتك الشخصية.</p>
+   <p class="muted">• تجنب الإزعاج والرسائل المتكررة.</p>
+   <p class="note">هذه نسخة تجريبية: الرسائل محفوظة في نفس المتصفح فقط. الشات الحقيقي بين الأجهزة يحتاج خادماً وقاعدة بيانات.</p>
+  </aside>
+ </div>
+</section>
+
+<section id="about" class="panel">
+ <div class="section-head"><h2>حول LOUAI ACADEMY</h2></div>
+ <div class="section-box">
+  <h3>رؤيتنا</h3>
+  <p class="muted">إنشاء منصة تعليمية جزائرية تجمع الدروس والاختبارات والتواصل الدراسي في مكان واحد.</p>
+  <h3>مراحل التطوير</h3>
+  <ol class="muted">
+   <li>إكمال محتوى السنوات والمواد.</li>
+   <li>إضافة حسابات آمنة للتلاميذ.</li>
+   <li>ربط الشات الجماعي بخادم حقيقي.</li>
+   <li>إنشاء لوحة إدارة للدروس والاختبارات.</li>
+   <li>تحويل الموقع إلى تطبيق قابل للتثبيت.</li>
+  </ol>
+ </div>
+</section>
+
+</main>
+
+<footer>© 2026 LOUAI ACADEMY — منصة تعليمية قيد التطوير</footer>
+
+<div id="modal" class="modal">
+ <div class="modal-box">
+  <div class="modal-top">
+   <h2 id="modalTitle"></h2>
+   <button class="btn" onclick="closeModal()">✕</button>
+  </div>
+  <div id="modalContent"></div>
+ </div>
+</div>
+
+<script>
+const pages=document.querySelectorAll('.panel');
+
+function showPage(id){
+ pages.forEach(p=>p.classList.toggle('active',p.id===id));
+ document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));
+ if(id==='chat')renderMessages();
+ window.scrollTo(0,0);
+}
+
+document.querySelectorAll('nav button').forEach(b=>{
+ b.addEventListener('click',()=>showPage(b.dataset.page));
+});
+
+function chooseLevel(level){
+ document.getElementById('levelSelect').value=level;
+ showPage('courses');
+ renderLessons();
+}
+
+const lessons=[
+ {level:'1 ثانوي',subject:'الرياضيات',title:'مجموعات الأعداد',desc:'التعرف على N و Z و D و Q و R.',body:'N: الأعداد الطبيعية.\\nZ: الأعداد الصحيحة النسبية.\\nD: الأعداد العشرية.\\nQ: الأعداد الناطقة التي تكتب على شكل كسر.\\nR: الأعداد الحقيقية.'},
+ {level:'1 ثانوي',subject:'الفيزياء',title:'بنية الذرة',desc:'النواة والإلكترونات والعددين A و Z.',body:'تتكون الذرة من نواة تحتوي على بروتونات ونيوترونات، وتحيط بها إلكترونات.\\nZ هو عدد البروتونات.\\nA هو مجموع البروتونات والنيوترونات.'},
+ {level:'1 ثانوي',subject:'العلوم',title:'مقدمة في التنظيم الخلوي',desc:'التعرف على الخلية.',body:'الخلية هي الوحدة البنيوية والوظيفية للكائنات الحية. وتتكون من مكونات أساسية مثل الغشاء الهيولي والهيولى والمادة الوراثية.'},
+ {level:'1 ثانوي',subject:'الإعلام الآلي',title:'مفاهيم أولية حول الحاسوب',desc:'العتاد والبرمجيات.',body:'العتاد هو الأجزاء المادية للحاسوب، أما البرمجيات فهي البرامج والتعليمات التي ينفذها.'},
+ {level:'1 ثانوي',subject:'التكنولوجيا',title:'مدخل إلى التكنولوجيا',desc:'الحاجة والمنتج التقني.',body:'تهتم التكنولوجيا بتصميم وإنجاز منتجات تقنية تلبي حاجات الإنسان.'}
+];
+
+function renderLessons(){
+ const level=document.getElementById('levelSelect').value;
+ const subject=document.getElementById('subjectSelect').value;
+ const q=document.getElementById('lessonSearch').value.trim();
+ const root=document.getElementById('lessonList');
+ root.replaceChildren();
+
+ const filtered=lessons.filter(x=>x.level===level&&x.subject===subject&&(x.title+' '+x.desc).includes(q));
+
+ if(!filtered.length){
+  const p=document.createElement('p');
+  p.className='muted';
+  p.textContent='لا توجد دروس منشورة لهذا الاختيار حالياً.';
+  root.append(p);
+  return;
+ }
+
+ filtered.forEach(x=>{
+  const d=document.createElement('article');
+  d.className='lesson';
+  const tag=document.createElement('span');
+  tag.className='tag';
+  tag.textContent=x.subject;
+  const h=document.createElement('h3');
+  h.textContent=x.title;
+  const p=document.createElement('p');
+  p.textContent=x.desc;
+  const b=document.createElement('button');
+  b.className='btn';
+  b.textContent='افتح الدرس';
+  b.onclick=()=>openLesson(x);
+  d.append(tag,h,p,b);
+  root.append(d);
+ });
+}
+
+function openLesson(x){
+ document.getElementById('modalTitle').textContent=x.title;
+ const p=document.createElement('p');
+ p.style.whiteSpace='pre-line';
+ p.textContent=x.body;
+ document.getElementById('modalContent').replaceChildren(p);
+ document.getElementById('modal').classList.add('show');
+}
+
+function closeModal(){
+ document.getElementById('modal').classList.remove('show');
+}
+
+['levelSelect','subjectSelect','lessonSearch'].forEach(id=>{
+ document.getElementById(id).addEventListener('input',renderLessons);
+});
+renderLessons();
+
+const questions=[
+ {q:'أي عدد ينتمي إلى N؟',a:['-4','7','2.5'],correct:1,why:'7 عدد طبيعي.'},
+ {q:'العدد -3 ينتمي إلى أي مجموعة؟',a:['N','Z','لا ينتمي'],correct:1,why:'-3 عدد صحيح نسبي.'},
+ {q:'ما قيمة √49؟',a:['6','7','8'],correct:1,why:'7 × 7 = 49.'}
+];
+
+function startQuiz(){
+ let i=0,score=0;
+ const title=document.getElementById('modalTitle');
+ const content=document.getElementById('modalContent');
+
+ function draw(){
+  if(i>=questions.length){
+   title.textContent='نتيجتك';
+   content.replaceChildren();
+   const p=document.createElement('p');
+   p.textContent='تحصلت على '+score+' من '+questions.length;
+   const b=document.createElement('button');
+   b.className='btn primary';
+   b.textContent='إغلاق';
+   b.onclick=()=>{
+    closeModal();
+    const result=document.getElementById('quizResult');
+    result.style.display='block';
+    result.textContent='آخر نتيجة: '+score+'/'+questions.length;
+   };
+   content.append(p,b);
+   return;
+  }
+
+  const q=questions[i];
+  title.textContent='السؤال '+(i+1)+' من '+questions.length;
+  content.replaceChildren();
+
+  const p=document.createElement('p');
+  p.textContent=q.q;
+  const wrap=document.createElement('div');
+  wrap.className='answers';
+
+  q.a.forEach((a,n)=>{
+   const label=document.createElement('label');
+   const radio=document.createElement('input');
+   radio.type='radio';
+   radio.name='answer';
+   radio.value=n;
+   label.append(radio,document.createTextNode(' '+a));
+   wrap.append(label);
+  });
+
+  const b=document.createElement('button');
+  b.className='btn primary';
+  b.textContent='تأكيد الإجابة';
+
+  b.onclick=()=>{
+   const selected=content.querySelector('input:checked');
+   if(!selected){alert('اختر إجابة أولاً');return;}
+   const ok=Number(selected.value)===q.correct;
+   if(ok)score++;
+
+   const feedback=document.createElement('p');
+   feedback.textContent=(ok?'إجابة صحيحة. ':'إجابة غير صحيحة. ')+q.why;
+
+   const next=document.createElement('button');
+   next.className='btn';
+   next.textContent='التالي';
+   next.onclick=()=>{i++;draw();};
+
+   content.append(feedback,next);
+   b.remove();
+   wrap.querySelectorAll('input').forEach(x=>x.disabled=true);
+  };
+
+  content.append(p,wrap,b);
+ }
+
+ draw();
+ document.getElementById('modal').classList.add('show');
+}
+
+function getMessages(){
+ try{return JSON.parse(localStorage.getItem('louai_messages')||'[]')}
+ catch{return []}
+}
+
+function renderMessages(){
+ const root=document.getElementById('messages');
+ root.replaceChildren();
+
+ getMessages().forEach(m=>{
+  const d=document.createElement('div');
+  d.className='msg';
+  const name=document.createElement('b');
+  name.textContent=m.name;
+  const p=document.createElement('p');
+  p.textContent=m.text;
+  d.append(name,p);
+  root.append(d);
+ });
+ root.scrollTop=root.scrollHeight;
+}
+
+document.getElementById('chatForm').addEventListener('submit',e=>{
+ e.preventDefault();
+ const name=document.getElementById('chatName').value.trim();
+ const text=document.getElementById('chatText').value.trim();
+ if(!name||!text)return;
+
+ const msgs=getMessages();
+ msgs.push({name,text});
+ localStorage.setItem('louai_messages',JSON.stringify(msgs.slice(-100)));
+
+ document.getElementById('chatText').value='';
+ renderMessages();
+});
+
+document.getElementById('modal').addEventListener('click',e=>{
+ if(e.target.id==='modal')closeModal();
+});
+</script>
+</body>
+</html>
